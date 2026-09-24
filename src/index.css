@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --bg-main: #0A0A0A;
+    --bg-card: #141414;
+    --color-accent: #FFFFFF;
+    --color-text: #EDEDED;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--color-text);
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  .font-serif {
+    font-family: 'Newsreader', 'Playfair Display', Georgia, serif;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Minimalist customized scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 120, 0.3);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(120, 120, 120, 0.6);
+}
+
+/* Specific Theme Styles */
+html.theme-emerald {
+  selection-background-color: #10B981;
+}
+html.theme-emerald ::selection {
+  background-color: #10B981;
+  color: #000000;
+}
+
+html.theme-nordic ::selection {
+  background-color: #38BDF8;
+  color: #000000;
+}
+
+html.theme-amber ::selection {
+  background-color: #F59E0B;
+  color: #000000;
+}
+
+html.theme-violet ::selection {
+  background-color: #C084FC;
+  color: #000000;
+}
+
+html.theme-light ::selection {
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+html.theme-dark ::selection {
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+/* Subtle theme accent glows on active cards */
+html.theme-emerald .hover\:border-black\/50:hover,
+html.theme-emerald .dark .hover\:border-white\/50:hover {
+  border-color: rgba(16, 185, 129, 0.5) !important;
+}
+
+html.theme-nordic .hover\:border-black\/50:hover,
+html.theme-nordic .dark .hover\:border-white\/50:hover {
+  border-color: rgba(56, 189, 248, 0.5) !important;
+}
+
+html.theme-amber .hover\:border-black\/50:hover,
+html.theme-amber .dark .hover\:border-white\/50:hover {
+  border-color: rgba(245, 158, 11, 0.5) !important;
+}
+
+html.theme-violet .hover\:border-black\/50:hover,
+html.theme-violet .dark .hover\:border-white\/50:hover {
+  border-color: rgba(192, 132, 252, 0.5) !important;
+}
+
+/* Editorial grid lines & borders */
+.editorial-border {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+.dark .editorial-border {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Print styles for authentic resume printing/saving to PDF */
+@media print {
+  body {
+    background-color: white !important;
+    color: black !important;
+    font-size: 10.5pt;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .page-break {
+    page-break-before: always;
+  }
+}
+
+@media screen {
+  .print-only {
+    display: none !important;
+  }
+}
