@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://modassirraza.vercel.app/sitemap.xml
+Sitemap: https://modassirraja.vercel.app/sitemap.xml
