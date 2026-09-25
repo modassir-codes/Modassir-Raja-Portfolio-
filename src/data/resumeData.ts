@@ -11,7 +11,7 @@ export const PERSONAL_INFO = {
   avatar: profilePhoto,
   avatarAlt: 'Modassir Raja - Full Stack Web Developer Portrait Headshot',
   summary:
-    'Full Stack Web Developer with a strong foundation in computer science and practical experience building responsive, accessible, and user-centric web applications. Skilled in React, JavaScript (ES6+), HTML5, CSS3, and modern frontend tools with a solid grasp of backend fundamentals and software development life cycles (SDLC). Dedicated to writing clean, maintainable code and delivering dependable digital solutions.',
+    'Full Stack Web Developer dedicated to building modern, responsive, and scalable web applications. Experienced in developing practical user-centric tools using React, modern JavaScript (ES6+), HTML5, CSS3, and backend RESTful architectures, backed by a strong foundation in computer science and software development life cycles (SDLC).',
   availability: 'Available for full-time Full Stack Web Engineering opportunities',
   yearsOfExperience: '2+ Years Training & Experience',
   targetRole: 'Full Stack Web Developer / Software Engineer',
@@ -57,52 +57,51 @@ export const EXPERIENCES: ExperienceItem[] = [
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
   {
-    title: 'Frontend Development',
-    description: 'Core web technologies for building interactive, fluid web apps',
+    title: 'Frontend',
+    description: 'Core web technologies for modern, responsive, and accessible interfaces',
     icon: 'Code2',
     skills: [
       { name: 'HTML5 & Semantic Web', level: 95, badge: 'Expert' },
       { name: 'CSS3 & Modern Layouts', level: 95, badge: 'Expert' },
-      { name: 'JavaScript (ES6+)', level: 90, badge: 'Advanced' },
-      { name: 'React (Hooks, VDOM)', level: 88, badge: 'Advanced' },
+      { name: 'JavaScript (ES6+)', level: 92, badge: 'Advanced' },
+      { name: 'React (Hooks, VDOM)', level: 90, badge: 'Advanced' },
+      { name: 'Tailwind CSS & Utility-First', level: 94, badge: 'Advanced' },
       { name: 'Responsive Web Design', level: 95, badge: 'Expert' },
-      { name: 'Tailwind CSS & Utility-First', level: 92, badge: 'Advanced' },
     ],
   },
   {
-    title: 'UI & UX Engineering',
-    description: 'Accessibility, consistency, visual hierarchy, and cross-browser resilience',
-    icon: 'Layout',
-    skills: [
-      { name: 'Accessibility (WCAG Basics)', level: 85, badge: 'Proficient' },
-      { name: 'Cross-Browser Compatibility', level: 90, badge: 'Advanced' },
-      { name: 'Typography Systems & Hierarchy', level: 90, badge: 'Advanced' },
-      { name: 'Color Standards & Design Tokens', level: 88, badge: 'Advanced' },
-      { name: 'Performance Optimization', level: 82, badge: 'Proficient' },
-    ],
-  },
-  {
-    title: 'Tools & Ecosystem',
-    description: 'Developer tooling, version control, and debugging environments',
-    icon: 'Wrench',
-    skills: [
-      { name: 'Git & GitHub Workflows', level: 88, badge: 'Advanced' },
-      { name: 'VS Code & Productivity Suite', level: 92, badge: 'Advanced' },
-      { name: 'Chrome DevTools & Profiling', level: 90, badge: 'Advanced' },
-      { name: 'Vite & Modern Bundlers', level: 85, badge: 'Proficient' },
-      { name: 'npm & Dependency Management', level: 88, badge: 'Advanced' },
-    ],
-  },
-  {
-    title: 'Engineering Practices',
-    description: 'Methodologies that guide clean, maintainable, scalable code',
+    title: 'Backend',
+    description: 'Server-side application logic, APIs, and data communication',
     icon: 'Terminal',
     skills: [
-      { name: 'Software Development Life Cycle (SDLC)', level: 88, badge: 'Proficient' },
-      { name: 'Debugging & Issue Triage', level: 90, badge: 'Advanced' },
-      { name: 'Code Reviews & Collaboration', level: 85, badge: 'Proficient' },
-      { name: 'Agile & Team Workflows', level: 85, badge: 'Proficient' },
-      { name: 'Security-First Development', level: 82, badge: 'Proficient' },
+      { name: 'Node.js & Express.js', level: 86, badge: 'Advanced' },
+      { name: 'RESTful API Architecture', level: 88, badge: 'Advanced' },
+      { name: 'Authentication & Middleware', level: 84, badge: 'Proficient' },
+      { name: 'C# Application Logic', level: 82, badge: 'Proficient' },
+      { name: 'Server-side Integration & SDLC', level: 85, badge: 'Proficient' },
+    ],
+  },
+  {
+    title: 'Database',
+    description: 'Data persistence, schema design, and state storage',
+    icon: 'Database',
+    skills: [
+      { name: 'MongoDB & Document Stores', level: 86, badge: 'Advanced' },
+      { name: 'Database Design & Management', level: 85, badge: 'Proficient' },
+      { name: 'LocalStorage & Client Persistence', level: 95, badge: 'Expert' },
+      { name: 'Data Modeling & CRUD Operations', level: 88, badge: 'Advanced' },
+    ],
+  },
+  {
+    title: 'Tools & Technologies',
+    description: 'Developer workflows, version control, and production tooling',
+    icon: 'Wrench',
+    skills: [
+      { name: 'Git & GitHub Workflows', level: 90, badge: 'Advanced' },
+      { name: 'VS Code & Chrome DevTools', level: 94, badge: 'Expert' },
+      { name: 'Vite & Modern Bundlers', level: 88, badge: 'Advanced' },
+      { name: 'npm & Package Management', level: 90, badge: 'Advanced' },
+      { name: 'Postman & API Debugging', level: 86, badge: 'Proficient' },
     ],
   },
 ];
@@ -117,7 +116,7 @@ export const PROJECTS: Project[] = [
     longDescription:
       'Money Notes is a lightweight personal money tracking application designed to keep track of money that the user has borrowed from someone or lent to someone.',
     category: 'fullstack',
-    tags: ['HTML', 'CSS', 'JavaScript', 'LocalStorage', 'PWA', 'Service Worker'],
+    tags: ['JavaScript', 'HTML5', 'CSS3', 'LocalStorage', 'PWA', 'Offline-First'],
     features: [
       'Borrowed transaction tracking',
       'Lent transaction tracking',
@@ -149,15 +148,15 @@ export const PROJECTS: Project[] = [
     githubUrl: 'https://github.com/modassir-raja/money-notes',
   },
   {
-    id: 'etracker',
-    title: 'eTracker',
-    tagline: 'Modern Expense & Budget Tracker',
+    id: 'expense-tracker',
+    title: 'Expense Tracker',
+    tagline: 'Modern Expense & Budget Management',
     description:
-      'A modern expense tracking application designed to help users manage income, expenses, budgets, and financial activity through a clean and intuitive interface.',
+      'A modern expense tracking application designed to help users manage income, expenses, budgets, and financial activity through a clean, responsive interface.',
     longDescription:
-      'eTracker is a personal expense and budget management application designed to help users efficiently log daily expenditures, track income sources, monitor budget thresholds, and analyze overall financial activity with clarity and ease.',
+      'Expense Tracker (eTracker) is a personal expense and budget management application designed to help users efficiently log daily expenditures, track income sources, monitor budget thresholds, and analyze overall financial activity with clarity and ease.',
     category: 'react',
-    tags: ['JavaScript', 'HTML5', 'CSS3', 'LocalStorage', 'Budget Planning', 'Responsive UI'],
+    tags: ['React', 'JavaScript', 'HTML5', 'CSS3', 'LocalStorage', 'Budget Planning'],
     features: [
       'Income & expense transaction logging with category tagging',
       'Real-time balance calculation and running summary overview',
@@ -171,7 +170,7 @@ export const PROJECTS: Project[] = [
       { label: 'Core Focus', description: 'Income, Expenses, Budgets & Financial Activity' },
     ],
     privacyNote:
-      'eTracker runs entirely on the client side with data persisted directly in browser LocalStorage, keeping financial logs private to the device.',
+      'Expense Tracker runs entirely on the client side with data persisted directly in browser LocalStorage, keeping financial logs private to the device.',
     developerInfo: {
       name: 'Modassir Raja',
       role: 'Full Stack Web Developer',
@@ -225,53 +224,11 @@ export const PROJECTS: Project[] = [
     githubUrl: 'https://github.com/modassir-raja/cba-brand-security-ui',
     liveUrl: '#',
   },
-  {
-    id: 'accessible-component-library',
-    title: 'Aura UI - Accessible React Component System',
-    description: 'High-performance, keyboard-navigable React design system and interactive component playground.',
-    longDescription:
-      'A modular UI library crafted to practice modern frontend engineering principles. Includes custom dropdowns, dialogs, responsive data grids, dark/light theme tokens, and comprehensive ARIA attribute implementations.',
-    category: 'react',
-    tags: ['React', 'TypeScript', 'Tailwind CSS', 'WCAG', 'ARIA'],
-    features: [
-      'Full keyboard navigation (arrow keys, escape, focus trapping)',
-      'Smooth micro-interactions powered by CSS transitions and Motion',
-      'Adaptive color token system supporting high-contrast dark and light modes',
-      'Zero-dependency standalone accessible modal and toast notification engine',
-    ],
-    metrics: 'Zero runtime accessibility violations across automated axe-core audits.',
-    readingTime: '4 min read',
-    iconName: 'Layers',
-    featured: true,
-    githubUrl: 'https://github.com/modassir-raja/aura-ui-components',
-    liveUrl: '#',
-  },
-  {
-    id: 'dev-tracker-app',
-    title: 'DevPulse - Agile Task & Sprint Performance Engine',
-    description: 'Modern developer workflow tracker with Kanban board, velocity metrics, and interactive code snippet catalog.',
-    longDescription:
-      'A responsive single-page React application for frontend engineering teams to organize SDLC tasks, track code review checkpoints, and monitor performance optimization metrics with instant client-side state.',
-    category: 'react',
-    tags: ['React', 'JavaScript (ES6+)', 'Tailwind CSS', 'State Management'],
-    features: [
-      'Interactive drag-and-drop task triage board with priority tagging',
-      'SDLC milestone tracker with automatic progress percentage calculations',
-      'Integrated code snippet repository with syntax highlight preview',
-      'Local persistence with offline-ready browser storage support',
-    ],
-    metrics: 'Instantaneous UI response times with optimized React rendering pipelines.',
-    readingTime: '3 min read',
-    iconName: 'Kanban',
-    featured: false,
-    githubUrl: 'https://github.com/modassir-raja/devpulse-tracker',
-    liveUrl: '#',
-  },
 ];
 
 export const EDUCATION: EducationItem[] = [
   {
-    degree: 'Bachelor of Science in Computer Science',
+    degree: 'B.Tech in Computer Science and Engineering (CSE)',
     institution: 'Shadan College of Engineering and Technology',
     period: '2022 – 2025',
     location: 'Hyderabad, India',

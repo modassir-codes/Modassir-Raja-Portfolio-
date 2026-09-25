@@ -4,9 +4,10 @@ import { ThemeProvider } from './context/ThemeContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
-import { Experience } from './components/Experience';
+import { AboutSection } from './components/AboutSection';
 import { Projects } from './components/Projects';
 import { Skills } from './components/Skills';
+import { Experience } from './components/Experience';
 import { EducationCertifications } from './components/EducationCertifications';
 import { ContactSection } from './components/ContactSection';
 import { ResumeModal } from './components/ResumeModal';
@@ -32,7 +33,16 @@ export default function App() {
   const handleOpenContact = () => {
     const el = document.getElementById('contact');
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      const navEl = document.getElementById('main-navbar');
+      const navHeight = navEl ? navEl.offsetHeight : 72;
+      const targetTop = el.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: Math.max(0, targetTop - navHeight - 14),
+        behavior: 'smooth',
+      });
+      if (window.location.hash !== '#contact') {
+        window.history.pushState(null, '', '#contact');
+      }
     }
   };
 
@@ -60,20 +70,26 @@ export default function App() {
 
           {/* Main Content Sections */}
           <main>
-            {/* Hero / About */}
+            {/* Hero Section */}
             <Hero
               onOpenResume={handleOpenResume}
               onOpenContact={handleOpenContact}
             />
 
-            {/* Key Experience */}
-            <Experience />
+            {/* About Section */}
+            <AboutSection
+              onOpenResume={handleOpenResume}
+              onOpenContact={handleOpenContact}
+            />
 
             {/* Featured Projects */}
             <Projects />
 
             {/* Technical Skills */}
             <Skills />
+
+            {/* Work & Engineering Experience */}
+            <Experience />
 
             {/* Education & Certifications */}
             <EducationCertifications />

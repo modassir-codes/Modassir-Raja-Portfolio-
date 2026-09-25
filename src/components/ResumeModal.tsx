@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Download, Printer, Check, FileText } from 'lucide-react';
+import { X, Download, Printer, FileText } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/resumeData';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -11,18 +11,9 @@ interface ResumeModalProps {
 
 export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => {
   const { t } = useLanguage();
-  const [downloadSuccess, setDownloadSuccess] = useState(false);
 
   const handlePrint = () => {
     window.print();
-  };
-
-  const handleDownloadPDF = () => {
-    setDownloadSuccess(true);
-    setTimeout(() => {
-      window.print();
-      setTimeout(() => setDownloadSuccess(false), 3000);
-    }, 300);
   };
 
   if (!isOpen) return null;
@@ -77,23 +68,15 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                 {t.resumeModal.printBtn}
               </button>
 
-              <button
+              <a
                 id="resume-modal-download-btn"
-                onClick={handleDownloadPDF}
+                href="/resume.pdf"
+                download="Modassir-Raja-Resume.pdf"
                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-[10px] font-mono uppercase font-bold tracking-wider rounded-xs text-white bg-black dark:bg-white dark:text-black hover:opacity-80 transition cursor-pointer"
               >
-                {downloadSuccess ? (
-                  <>
-                    <Check className="w-3 h-3" />
-                    Opening Print...
-                  </>
-                ) : (
-                  <>
-                    <Download className="w-3 h-3" />
-                    {t.resumeModal.downloadPdf}
-                  </>
-                )}
-              </button>
+                <Download className="w-3 h-3" />
+                {t.resumeModal.downloadPdf}
+              </a>
 
               <button
                 id="resume-modal-close-btn"
@@ -249,7 +232,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                 <div className="space-y-2 text-xs">
                   <div>
                     <div className="flex justify-between items-baseline font-mono text-xs">
-                      <h3 className="font-bold text-black font-serif text-sm">Bachelor of Science in Computer Science</h3>
+                      <h3 className="font-bold text-black font-serif text-sm">B.Tech in Computer Science and Engineering (CSE)</h3>
                       <span className="text-neutral-500">2022 – 2025</span>
                     </div>
                     <p className="text-neutral-600 font-serif">Shadan College of Engineering and Technology</p>

@@ -29,22 +29,22 @@ export const Footer: React.FC<FooterProps> = ({ onOpenResume }) => {
               />
             </div>
             <div>
-              <span className="text-sm font-serif font-normal text-black dark:text-white block">
+              <span className="text-sm font-serif font-normal text-black dark:text-white block font-medium">
                 Modassir Raja
               </span>
-              <span className="text-[10px] text-neutral-500 font-mono uppercase tracking-widest">
-                {t.hero.tagline} // {PERSONAL_INFO.location}
+              <span className="text-[10px] text-neutral-500 font-mono uppercase tracking-wider">
+                Full Stack Web Developer • {PERSONAL_INFO.location}
               </span>
             </div>
           </div>
 
           {/* Nav links */}
-          <div className="flex flex-wrap items-center justify-center gap-6 text-[10px] font-mono uppercase tracking-widest text-neutral-600 dark:text-neutral-400">
+          <div className="flex flex-wrap items-center justify-center gap-6 text-[10px] font-mono uppercase tracking-wider text-neutral-600 dark:text-neutral-400">
             <a href="#home" className="hover:text-black dark:hover:text-white transition">
               {t.nav.home}
             </a>
-            <a href="#experience" className="hover:text-black dark:hover:text-white transition">
-              {t.nav.experience}
+            <a href="#about" className="hover:text-black dark:hover:text-white transition">
+              {t.nav.about}
             </a>
             <a href="#projects" className="hover:text-black dark:hover:text-white transition">
               {t.nav.projects}
@@ -52,16 +52,23 @@ export const Footer: React.FC<FooterProps> = ({ onOpenResume }) => {
             <a href="#skills" className="hover:text-black dark:hover:text-white transition">
               {t.nav.skills}
             </a>
+            <a href="#experience" className="hover:text-black dark:hover:text-white transition">
+              {t.nav.experience}
+            </a>
             <a href="#education" className="hover:text-black dark:hover:text-white transition">
               {t.nav.education}
             </a>
-            <button
-              onClick={onOpenResume}
+            <a href="#contact" className="hover:text-black dark:hover:text-white transition">
+              {t.nav.contact}
+            </a>
+            <a
+              href="/resume.pdf"
+              download="Modassir-Raja-Resume.pdf"
               className="text-black dark:text-white hover:opacity-75 inline-flex items-center gap-1 font-bold border-b border-black dark:border-white cursor-pointer"
             >
               <FileDown className="w-3 h-3" />
               {t.nav.resume}
-            </button>
+            </a>
           </div>
 
           {/* Socials & Back to top */}

@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 import { ThemeSelector } from './ThemeSelector';
 import { LanguageSelector } from './LanguageSelector';
-import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 import { PERSONAL_INFO } from '../data/resumeData';
 
@@ -13,40 +12,98 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onOpenContact }) => {
-  const { currentThemeConfig } = useTheme();
   const { t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState('overview');
+
+  const scrollToSection = (sectionId: string) => {
+    const targetEl =
+      document.getElementById(sectionId) ||
+      (sectionId === 'overview' ? document.getElementById('home') : null);
+
+    if (targetEl) {
+      const navEl = document.getElementById('main-navbar');
+      const navHeight = navEl ? navEl.offsetHeight : 72;
+      const targetTop = targetEl.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = Math.max(0, targetTop - navHeight - 14);
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+    }
+
+    if (window.location.hash !== `#${sectionId}`) {
+      window.history.pushState(null, '', `#${sectionId}`);
+    }
+    setActiveSection(sectionId);
+  };
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    sectionId: string
+  ) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+
+    requestAnimationFrame(() => {
+      scrollToSection(sectionId);
+    });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      const sections = ['home', 'experience', 'projects', 'skills', 'education', 'contact'];
-      const scrollPosition = window.scrollY + 120;
+      // Bottom of page check
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 80) {
+        setActiveSection('contact');
+        return;
+      }
 
-      for (const section of sections) {
-        const el = document.getElementById(section);
+      const sections = ['overview', 'projects', 'experience', 'about', 'skills', 'education', 'contact'];
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const secId = sections[i];
+        const el = document.getElementById(secId) || (secId === 'overview' ? document.getElementById('home') : null);
         if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section);
+          const top = el.offsetTop - 120;
+          if (window.scrollY >= top) {
+            setActiveSection(secId);
             break;
           }
         }
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        const targetId = hash === 'home' ? 'overview' : hash;
+        setTimeout(() => {
+          scrollToSection(targetId);
+        }, 150);
+      }
+    };
+
+    if (window.location.hash) {
+      handleHash();
+    }
+
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
+
   const navLinks = [
-    { name: t.nav.home, href: '#home', id: 'home' },
-    { name: t.nav.experience, href: '#experience', id: 'experience' },
+    { name: t.nav.home, href: '#overview', id: 'overview' },
     { name: t.nav.projects, href: '#projects', id: 'projects' },
+    { name: t.nav.experience, href: '#experience', id: 'experience' },
+    { name: t.nav.about, href: '#about', id: 'about' },
     { name: t.nav.skills, href: '#skills', id: 'skills' },
     { name: t.nav.education, href: '#education', id: 'education' },
     { name: t.nav.contact, href: '#contact', id: 'contact' },
@@ -68,11 +125,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onOpenContact }) =
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Brand Signature */}
           <a
-            href="#home"
-            className="flex items-center gap-3 group focus:outline-hidden"
-            aria-label="Modassir Raja - Portfolio Home"
+            href="#overview"
+            onClick={(e) => handleNavClick(e, 'overview')}
+            className="flex items-center gap-3 group focus:outline-hidden cursor-pointer"
+            aria-label="Modassir Raja - Portfolio Overview"
           >
-            {/* Small Monogram / Avatar Avatar */}
+            {/* Monogram / Avatar */}
             <div className="w-8 h-8 rounded-xs overflow-hidden border border-black/20 dark:border-white/20 relative group-hover:border-black dark:group-hover:border-white transition">
               <img
                 src={PERSONAL_INFO.avatar}
@@ -86,14 +144,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onOpenContact }) =
               <span className="font-serif font-bold text-base sm:text-lg tracking-tight text-black dark:text-white leading-tight">
                 {PERSONAL_INFO.name}
               </span>
-              <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-neutral-500 leading-none">
-                {t.hero.tagline}
+              <span className="font-mono text-[9px] uppercase tracking-wider text-neutral-500 leading-none">
+                {PERSONAL_INFO.title}
               </span>
             </div>
           </a>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden md:flex items-center gap-7 text-[11px] uppercase tracking-[0.25em] font-medium text-black/70 dark:text-white/70">
+          <nav className="hidden lg:flex items-center gap-6 text-[11px] uppercase tracking-widest font-medium text-black/70 dark:text-white/70">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
@@ -101,7 +159,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onOpenContact }) =
                   key={link.id}
                   id={`nav-link-${link.id}`}
                   href={link.href}
-                  className={`relative py-1 transition-opacity duration-150 ${
+                  onClick={(e) => handleNavClick(e, link.id)}
+                  className={`relative py-1 transition-opacity duration-150 cursor-pointer ${
                     isActive
                       ? 'text-black dark:text-white font-bold opacity-100'
                       : 'hover:opacity-100 hover:text-black dark:hover:text-white'
@@ -120,43 +179,48 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onOpenContact }) =
             })}
           </nav>
 
-          {/* Right actions: Language Switcher + Theme Palette Switcher + Resume Button + Contact CTA */}
+          {/* Right actions: Language Switcher + Theme Switcher + Resume Button + Contact CTA */}
           <div className="hidden sm:flex items-center gap-3">
             {/* Language Switcher */}
             <LanguageSelector variant="navbar" />
 
-            {/* Curated Theme Selector Dropdown */}
+            {/* Theme Selector Dropdown */}
             <ThemeSelector variant="navbar" />
 
             {/* Resume Button */}
-            <button
+            <a
               id="nav-resume-btn"
-              onClick={onOpenResume}
-              className="bg-black text-white dark:bg-white dark:text-black px-3.5 py-2 text-[10px] uppercase font-bold tracking-[0.2em] rounded-xs hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors shadow-xs"
+              href="/resume.pdf"
+              download="Modassir-Raja-Resume.pdf"
+              className="bg-black text-white dark:bg-white dark:text-black px-3.5 py-2 text-[10px] uppercase font-bold tracking-wider rounded-xs hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors shadow-xs cursor-pointer inline-flex items-center justify-center"
             >
-              {t.nav.resume}
-            </button>
+              Resume
+            </a>
 
-            {/* Get in touch CTA */}
+            {/* Contact CTA */}
             <button
               id="nav-contact-cta"
-              onClick={onOpenContact}
-              className="border border-black/20 dark:border-white/20 text-black dark:text-white px-3 py-2 text-[10px] uppercase font-bold tracking-[0.2em] rounded-xs hover:border-black dark:hover:border-white transition-colors"
+              onClick={() => {
+                scrollToSection('contact');
+                onOpenContact();
+              }}
+              className="border border-black/20 dark:border-white/20 text-black dark:text-white px-3 py-2 text-[10px] uppercase font-bold tracking-wider rounded-xs hover:border-black dark:hover:border-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
             >
-              {t.nav.contact}
+              Contact
             </button>
           </div>
 
-          {/* Mobile actions & hamburger button */}
-          <div className="flex items-center gap-2 md:hidden">
+          {/* Mobile actions & hamburger/3-dot menu button */}
+          <div className="flex items-center gap-2 lg:hidden">
             <LanguageSelector variant="navbar" />
             <ThemeSelector variant="navbar" />
 
             <button
               id="mobile-menu-btn"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xs text-black dark:text-white border border-black/10 dark:border-white/10"
-              aria-label="Toggle menu"
+              className="p-2 rounded-xs text-black dark:text-white border border-black/10 dark:border-white/10 cursor-pointer"
+              aria-label="Toggle navigation menu"
+              title="Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -171,7 +235,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onOpenContact }) =
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-b border-black/10 dark:border-white/10 bg-[#FAFAFA]/95 dark:bg-[#0F0F0F]/95 backdrop-blur-xl px-6 pt-3 pb-8 space-y-4 shadow-xl"
+            className="lg:hidden border-b border-black/10 dark:border-white/10 bg-[#FAFAFA]/95 dark:bg-[#0F0F0F]/95 backdrop-blur-xl px-6 pt-3 pb-8 space-y-4 shadow-xl"
             style={{
               backgroundColor: 'var(--bg-main)',
             }}
@@ -180,9 +244,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onOpenContact }) =
               {navLinks.map((link) => (
                 <a
                   key={link.id}
+                  id={`mobile-nav-link-${link.id}`}
                   href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`py-2 text-xs uppercase tracking-[0.25em] font-medium border-b border-black/5 dark:border-white/5 transition ${
+                  onClick={(e) => handleNavClick(e, link.id)}
+                  className={`py-2 text-xs uppercase tracking-widest font-medium border-b border-black/5 dark:border-white/5 transition cursor-pointer ${
                     activeSection === link.id
                       ? 'text-black dark:text-white font-bold'
                       : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'
@@ -200,24 +265,24 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onOpenContact }) =
             <ThemeSelector variant="mobile" />
 
             <div className="pt-2 flex flex-col gap-2">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenResume();
-                }}
-                className="w-full py-3 bg-black text-white dark:bg-white dark:text-black text-[10px] font-bold tracking-[0.2em] uppercase rounded-xs"
+              <a
+                href="/resume.pdf"
+                download="Modassir-Raja-Resume.pdf"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full py-3 bg-black text-white dark:bg-white dark:text-black text-xs font-bold tracking-wider uppercase rounded-xs cursor-pointer text-center block"
               >
-                {t.nav.resume}
-              </button>
+                Download Resume
+              </a>
 
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
+                  scrollToSection('contact');
                   onOpenContact();
                 }}
-                className="w-full py-2.5 border border-black/20 dark:border-white/20 text-black dark:text-white text-[10px] font-bold tracking-[0.2em] uppercase rounded-xs"
+                className="w-full py-2.5 border border-black/20 dark:border-white/20 text-black dark:text-white text-xs font-bold tracking-wider uppercase rounded-xs cursor-pointer"
               >
-                {t.nav.getInTouch}
+                Get in Touch
               </button>
             </div>
           </motion.div>

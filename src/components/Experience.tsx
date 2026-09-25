@@ -9,7 +9,7 @@ export const Experience: React.FC = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="experience" className="py-24 border-b border-black/10 dark:border-white/10 overflow-hidden">
+    <section id="experience" className="py-24 border-b border-black/10 dark:border-white/10 overflow-hidden scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
