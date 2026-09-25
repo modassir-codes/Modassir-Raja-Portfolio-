@@ -180,7 +180,7 @@ export const PROJECTS: Project[] = [
     readingTime: '3 min read',
     iconName: 'PieChart',
     featured: true,
-    liveUrl: 'https://etracker.ai.studio/',
+    liveUrl: 'https://etrackerr.vercel.app',
     githubUrl: 'https://github.com/modassir-raja/etracker',
   },
   {
